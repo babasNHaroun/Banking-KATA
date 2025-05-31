@@ -1,23 +1,29 @@
-package com.banking;
+package com.banking.service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import com.banking.model.Transaction;
+import com.banking.interfaces.BankAccount;
 
-public class Account {
+public class Account implements BankAccount {
     private int balance;
     private final List<Transaction> transactions;
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     public Account() {
         this.balance = 0;
         this.transactions = new ArrayList<>();
     }
 
+    @Override
     public int getBalance() {
         return balance;
     }
 
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    @Override
     public void deposit(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("Cannot deposit a negative amount");
@@ -26,6 +32,7 @@ public class Account {
         transactions.add(new Transaction(amount, balance));
     }
 
+    @Override
     public void withdraw(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException("Cannot withdraw a negative amount");
@@ -36,18 +43,5 @@ public class Account {
         this.balance -= amount;
         transactions.add(new Transaction(-amount, balance));
     }
-
-    
-    public String printStatement() {
-        StringBuilder statement = new StringBuilder("DATE | AMOUNT | BALANCE\n");
-        for (Transaction transaction : transactions) {
-            statement.append(String.format("%s | %d | %d\n",
-                    transaction.getDate().format(DATE_FORMATTER),
-                    transaction.getAmount(),
-                    transaction.getBalance()));
-        }
-        return statement.toString();
-    }
-
 
 }
