@@ -3,6 +3,10 @@ package com.banking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import com.banking.service.Account;
+import com.banking.service.BankStatementPrinter;
+import com.banking.interfaces.StatementPrinter;
+
 
 public class AccountTest {
     private Account account;
@@ -46,19 +50,22 @@ public class AccountTest {
         assertThrows(IllegalArgumentException.class, () -> account.withdraw(1000));
     }
 
-        @Test
+    @Test
     void shouldPrintStatementWithNoTransactions() {
-        String statement = account.printStatement();
+        StatementPrinter printer = new BankStatementPrinter();
+        String statement = printer.print(account.getTransactions());
         assertTrue(statement.contains("DATE | AMOUNT | BALANCE"));
     }
 
     @Test
     void shouldPrintStatementWithTheRightTransactions() {
+        StatementPrinter printer = new BankStatementPrinter();
+
         account.deposit(1000);
         account.withdraw(300);
         account.deposit(2000);
 
-        String statement = account.printStatement();
+        String statement = printer.print(account.getTransactions());
         assertTrue(statement.contains("DATE | AMOUNT | BALANCE"));
         assertTrue(statement.contains("1000"));
         assertTrue(statement.contains("-300"));
