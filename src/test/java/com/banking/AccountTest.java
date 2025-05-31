@@ -45,4 +45,23 @@ public class AccountTest {
         account.deposit(500);
         assertThrows(IllegalArgumentException.class, () -> account.withdraw(1000));
     }
+
+        @Test
+    void shouldPrintStatementWithNoTransactions() {
+        String statement = account.printStatement();
+        assertTrue(statement.contains("DATE | AMOUNT | BALANCE"));
+    }
+
+    @Test
+    void shouldPrintStatementWithTheRightTransactions() {
+        account.deposit(1000);
+        account.withdraw(300);
+        account.deposit(2000);
+
+        String statement = account.printStatement();
+        assertTrue(statement.contains("DATE | AMOUNT | BALANCE"));
+        assertTrue(statement.contains("1000"));
+        assertTrue(statement.contains("-300"));
+        assertTrue(statement.contains("2000"));
+    }
 }
