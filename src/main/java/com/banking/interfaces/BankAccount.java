@@ -1,9 +1,11 @@
 package com.banking.interfaces;
 
+import java.math.BigDecimal;
+
 public interface BankAccount {
-    int getBalance();
+    BigDecimal getBalance();
 
-    void deposit(int amount);
+    void deposit(BigDecimal amount);
 
-    void withdraw(int amount);
+    void withdraw(BigDecimal amount);
 }

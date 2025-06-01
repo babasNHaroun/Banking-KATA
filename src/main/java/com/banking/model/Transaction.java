@@ -1,13 +1,14 @@
 package com.banking.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Transaction {
     private final LocalDateTime date;
-    private final int amount;
-    private final int balance;
+    private final BigDecimal amount;
+    private final BigDecimal balance;
 
-    public Transaction(int amount, int balance) {
+    public Transaction(BigDecimal amount, BigDecimal balance) {
         this.date = LocalDateTime.now();
         this.amount = amount;
         this.balance = balance;
@@ -17,11 +18,11 @@ public class Transaction {
         return date;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public int getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 }
