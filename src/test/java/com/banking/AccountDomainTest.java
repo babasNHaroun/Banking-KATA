@@ -67,8 +67,8 @@ public class AccountDomainTest {
         account.withdraw(new Money(BigDecimal.ONE));
         List<Transaction> transactions = account.getTransactions();
 
-        assertEquals(new Money(BigDecimal.TEN), transactions.get(0).getAmount());
-        assertEquals(new Money(BigDecimal.ONE.negate()), transactions.get(1).getAmount());
+        assertEquals(new Money(BigDecimal.TEN), transactions.get(0).amount());
+        assertEquals(new Money(BigDecimal.ONE.negate()), transactions.get(1).amount());
     }
 
     @Test

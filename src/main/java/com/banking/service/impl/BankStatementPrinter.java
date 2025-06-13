@@ -7,9 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.banking.utils.Constants;
-
+import org.springframework.stereotype.Service;
 import com.banking.service.StatementPrinter;
 
+@Service
 public class BankStatementPrinter implements StatementPrinter {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final Logger logger = LoggerFactory.getLogger(BankStatementPrinter.class);
@@ -20,9 +21,9 @@ public class BankStatementPrinter implements StatementPrinter {
         StringBuilder statement = new StringBuilder(Constants.STATEMENT_HEADER);
         for (Transaction transaction : transactions) {
             statement.append(String.format("%s | %s | %s\n",
-                    transaction.getDate().format(DATE_FORMATTER),
-                    transaction.getAmount(),
-                    transaction.getBalanceAfter()));
+                    transaction.date().format(DATE_FORMATTER),
+                    transaction.amount(),
+                    transaction.balanceAfter()));
         }
         return statement.toString();
     }

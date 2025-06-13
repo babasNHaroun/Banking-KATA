@@ -33,14 +33,18 @@ public class Account {
 
     public void deposit(Money amount) {
         if (amount.isNegative()) throw new IllegalArgumentException("Deposit must be positive");
-        balance = balance.add(amount);
-        transactions.add(new Transaction(amount, balance, LocalDateTime.now(clock)));
+        synchronized (this) {
+            balance = balance.add(amount);
+            transactions.add(new Transaction(amount, balance, LocalDateTime.now(clock)));
+        }
     }
 
     public void withdraw(Money amount) {
         if (amount.isNegative()) throw new IllegalArgumentException("Withdrawal must be positive");
         if (balance.subtract(amount).isNegative()) throw new IllegalArgumentException("Insufficient funds");
-        balance = balance.subtract(amount);
-        transactions.add(new Transaction(new Money(amount.asBigDecimal().negate()), balance, LocalDateTime.now(clock)));
+        synchronized (this) {
+           balance = balance.subtract(amount);
+           transactions.add(new Transaction(new Money(amount.asBigDecimal().negate()), balance, LocalDateTime.now(clock)));
+        }
     }
 }

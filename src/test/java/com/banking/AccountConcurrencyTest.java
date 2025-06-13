@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.Clock;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -53,7 +54,7 @@ public class AccountConcurrencyTest {
                     failureCounter.incrementAndGet();
                 }
             });
-        }
+        } 
 
         executor.shutdown();
         executor.awaitTermination(1, TimeUnit.SECONDS);
@@ -62,4 +63,5 @@ public class AccountConcurrencyTest {
         assertEquals(1, failureCounter.get());
         assertEquals(new Money(BigDecimal.ZERO), account.getBalance());
     }
+
 }

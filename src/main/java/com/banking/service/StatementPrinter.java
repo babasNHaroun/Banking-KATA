@@ -4,7 +4,8 @@ import java.util.List;
 import com.banking.model.Transaction;
 
 public interface StatementPrinter {
-    /**
+    /**clear
+     * 
      * Prints a statement of transactions.
      * 
      * @param transactions The list of transactions to print.
