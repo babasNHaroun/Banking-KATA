@@ -12,6 +12,3 @@ ng serve
 ```
 
 The frontend will start on [http://localhost:4200](http://localhost:4200).
-
-# .gitignore
-.DS_Store
