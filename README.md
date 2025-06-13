@@ -1,4 +1,4 @@
-# SG-Kata Monorepo
+# SG-Kata
 
 This repository contains two main projects:
 
