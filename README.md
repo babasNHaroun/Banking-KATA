@@ -59,11 +59,11 @@ This app uses an inMemory storage DB mechanism for the purpose of simplicity so 
 Thus, data is erased every time the backend restarts.
 
   ( 
-    for simplicity, a default account with ID 'account-123' is created by clicking the 'Create account' button in the homepage.
+    for simplicity, a default account with ID 'account-123' is created by clicking the 'Create Account' button in the homepage.
 
-    This small angular app does not support the creating and management of accounts.
+    This small angular app does not support the creation and management of accounts.
 
-    Of course, you can create as many accounts as you want with the Rest API acounts/create endpoint using a Rest client if you want to.
+    Of course, you can create as many accounts as you want with the Rest API /acounts POST endpoint using a Rest client if you want to.
   )
 - Deposit & Withdraw
 - View Transactions
