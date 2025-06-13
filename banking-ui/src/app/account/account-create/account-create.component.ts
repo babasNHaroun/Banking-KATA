@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common'; // <-- Add this import
   styleUrls: ['./account-create.component.css']
 })
 export class AccountCreateComponent {
-  accountId = 'account-123';
+  accountId = 'account-123'; // Default account ID for testing and demonstration
   message = '';
   error = '';
 

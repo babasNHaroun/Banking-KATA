@@ -1,6 +1,6 @@
 mat-card {
   max-width: 400px;
-  margin: 40px auto;
+  width: 100%;
   padding: 24px 16px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
@@ -33,4 +33,11 @@ button[type="submit"] {
 
 .error-message {
   color: #d32f2f;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
 }

@@ -1,4 +1,4 @@
-# SG-Kata
+# SG-Kata Monorepo
 
 This repository contains two main projects:
 
@@ -11,18 +11,68 @@ This repository contains two main projects:
 
 ```
 SG-Kata/
-├── Banking-KATA/      # Spring Boot backend
-└── banking-ui/        # Angular frontend
+├── Banking-KATA/                # Spring Boot backend
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/banking/
+│   │   │   │   ├── api/          # REST controllers
+│   │   │   │   ├── model/        # Domain models (e.g., Account, Transaction)
+│   │   │   │   ├── service/      # Business logic/services
+│   │   │   │   └── BankingKataApplication.java
+│   │   │   └── resources/
+│   │   │       └── application.properties
+│   │   └── test/
+│   │       └── java/com/banking/ # Unit and integration tests
+│   └── pom.xml                   # Maven build file
+│
+└── banking-ui/                   # Angular frontend
+    ├── src/
+    │   ├── app/
+    │   │   ├── accounts/         # Feature components (deposit, withdraw, transactions, statement)
+    │   │   ├── services/         # Angular services (e.g., account.service.ts)
+    │   │   ├── models/           # TypeScript interfaces/models
+    │   │   ├── app.component.ts  # Main app component
+    │   │   └── app.routes.ts     # Routing configuration
+    │   └── assets/
+    │
+    ├── angular.json              # Angular CLI config
+    ├── package.json              # NPM dependencies and scripts
+    └── README.md                 # Frontend documentation
 ```
 
 ---
 
+## Prerequisites
+
+- **Node.js:**  
+  You must have **Node.js v19 or higher** installed to run the Angular frontend.
+
+- **Java:**  
+  You must have **Java 17 or higher** installed to build and run the Spring Boot backend.
+
+---
+
+
+## Features
+
+This app uses an inMemory storage DB mechanism for the purpose of simplicity so as to focus on architecture.
+Thus, data is erased every time the backend restarts.
+
+  ( 
+    for simplicity, a default account with ID 'account-123' is created by clicking the 'Create account' button in the homepage.
+
+    This small angular app does not support the creating and management of accounts.
+
+    Of course, you can create as many accounts as you want with the Rest API acounts/create endpoint using a Rest client if you want to.
+  )
+- Deposit & Withdraw
+- View Transactions
+- View Account Statement
+- Sidebar navigation
+
+---
+
 ## 1. Banking-KATA (Spring Boot Backend)
-
-### Prerequisites
-
-- Java 19 (or as specified in `pom.xml`)
-- Maven
 
 ### Running the Backend
 
@@ -41,11 +91,6 @@ CORS is enabled for `http://localhost:4200` to allow the Angular frontend to com
 
 ## 2. banking-ui (Angular Frontend)
 
-### Prerequisites
-
-- Node.js (v16+ recommended)
-- Angular CLI (`npm install -g @angular/cli`)
-
 ### Running the Frontend
 
 ```sh
@@ -55,24 +100,6 @@ ng serve
 ```
 
 The frontend will start on [http://localhost:4200](http://localhost:4200).
-
----
-
-## Features
-
-- Create Account
-- Deposit & Withdraw
-- View Transactions
-- View Account Statement
-- Angular Material UI with sidebar navigation
-
----
-
-## Usage
-
-1. **Start the backend** (`Banking-KATA`).
-2. **Start the frontend** (`banking-ui`).
-3. Open [http://localhost:4200](http://localhost:4200) in your browser.
 
 ---
 

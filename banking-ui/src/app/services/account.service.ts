@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Account, Transaction } from '../models/account.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -8,31 +10,49 @@ export class AccountService {
 
   constructor(private http: HttpClient) {}
 
-  getAccounts(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(this.apiUrl).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  getAccount(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  getAccount(id: string): Observable<Account> {
+    return this.http.get<Account>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  createAccount(accountId: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { accountId });
+  createAccount(accountId: string): Observable<Account> {
+    return this.http.post<Account>(this.apiUrl, { accountId }).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  deposit(accountId: string, amount: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${accountId}/deposit`, { amount });
+  deposit(accountId: string, amount: string): Observable<Account> {
+    return this.http.post<Account>(`${this.apiUrl}/${accountId}/deposit`, { amount }).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  withdraw(accountId: string, amount: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${accountId}/withdraw`, { amount });
+  withdraw(accountId: string, amount: string): Observable<Account> {
+    return this.http.post<Account>(`${this.apiUrl}/${accountId}/withdraw`, { amount }).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  getTransactions(accountId: string) {
-    return this.http.get<any[]>(`http://localhost:8080/accounts/${accountId}/transactions`);
+  getTransactions(accountId: string): Observable<Transaction[]> {
+    return this.http.get<Transaction[]>(`${this.apiUrl}/${accountId}/transactions`).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  getStatement(accountId: string) {
-    return this.http.get(`http://localhost:8080/accounts/${accountId}/statement`, { responseType: 'text' });
+  getStatement(accountId: string): Observable<string> {
+    return this.http.get(`${this.apiUrl}/${accountId}/statement`, { responseType: 'text' as const }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: any) {
+    return throwError(() => error);
   }
 }
