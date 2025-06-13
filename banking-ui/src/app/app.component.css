@@ -1,0 +1,17 @@
+/* filepath: /Users/saidbmh/Documents/projects/SG-Kata/banking-ui/src/app/app.component.scss */
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 220px;
+}
+
+mat-toolbar {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.active {
+  background: #e3f2fd;
+}

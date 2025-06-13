@@ -1,0 +1,16 @@
+<mat-card>
+  <h2>Deposit Funds</h2>
+  <form (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Amount</mat-label>
+      <input matInput [(ngModel)]="amount" name="amount" required type="number" min="0.01" step="0.01" autocomplete="off">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!amount">Deposit</button>
+  </form>
+  <div *ngIf="message" class="success-message">
+    <mat-icon color="primary">check_circle</mat-icon> {{ message }}
+  </div>
+  <div *ngIf="error" class="error-message">
+    <mat-icon color="warn">error</mat-icon> {{ error }}
+  </div>
+</mat-card>

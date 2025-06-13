@@ -1,0 +1,10 @@
+<mat-card>
+  <h2>Account Statement</h2>
+  <pre *ngIf="statement; else errorBlock">{{ statement }}</pre>
+  <ng-template #errorBlock>
+    <div class="error-message">
+      <mat-icon color="warn">error</mat-icon>
+      {{ error || 'No statement available.' }}
+    </div>
+  </ng-template>
+</mat-card>
