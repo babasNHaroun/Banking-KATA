@@ -7,7 +7,6 @@ import com.banking.service.AccountService;
 import com.banking.service.StatementPrinter;
 import com.banking.api.dto.AccountCreateRequestDTO;
 import com.banking.api.dto.AmountRequestDTO;
-import com.banking.api.dto.AccountResponseDTO;
 import com.banking.api.dto.TransactionResponseDTO;
 import com.banking.api.mapper.AccountMapper;
 import org.springframework.http.ResponseEntity;
