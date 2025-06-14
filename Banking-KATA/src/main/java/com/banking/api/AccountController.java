@@ -9,10 +9,11 @@ import com.banking.api.dto.AccountCreateRequestDTO;
 import com.banking.api.dto.AmountRequestDTO;
 import com.banking.api.dto.TransactionResponseDTO;
 import com.banking.api.mapper.AccountMapper;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,15 +29,15 @@ public class AccountController {
         this.statementPrinter = statementPrinter;
     }
 
+    private ResponseEntity<String> accountNotFound(String accountId) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No account found with id: " + accountId);
+    }
+
     // Create Account
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody AccountCreateRequestDTO request) {
-        try {
-            Account account = accountService.createAccount(request.getAccountId());
-            return ResponseEntity.status(201).body(AccountMapper.toDto(account));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
+        Account account = accountService.createAccount(request.getAccountId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(AccountMapper.toDto(account));
     }
 
     // Get Account Details
@@ -44,8 +45,7 @@ public class AccountController {
     public ResponseEntity<?> getAccount(@PathVariable("accountId") String accountId) {
         Account account = accountService.getAccount(accountId);
         if (account == null) {
-            return ResponseEntity.status(404)
-                .body("No account found with id: " + accountId);
+            return accountNotFound(accountId);
         }
         return ResponseEntity.ok(AccountMapper.toDto(account));
     }
@@ -53,31 +53,21 @@ public class AccountController {
     // Deposit
     @PostMapping("/{accountId}/deposit")
     public ResponseEntity<?> deposit(@PathVariable("accountId") String accountId, @RequestBody AmountRequestDTO request) {
-        try {
-            Account account = accountService.deposit(accountId, new Money(new BigDecimal(request.getAmount())));
-            if (account == null) {
-                return ResponseEntity.status(404)
-                    .body("No account found with id: " + accountId);
-            }
-            return ResponseEntity.ok(AccountMapper.toDto(account));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
+        Account account = accountService.deposit(accountId, new Money(request.getAmount()));
+        if (account == null) {
+            return accountNotFound(accountId);
         }
+        return ResponseEntity.ok(AccountMapper.toDto(account));
     }
 
     // Withdraw
     @PostMapping("/{accountId}/withdraw")
     public ResponseEntity<?> withdraw(@PathVariable("accountId") String accountId, @RequestBody AmountRequestDTO request) {
-        try {
-            Account account = accountService.withdraw(accountId, new Money(new BigDecimal(request.getAmount())));
-            if (account == null) { 
-                return ResponseEntity.status(404)
-                    .body("No account found with id: " + accountId);
-            }
-            return ResponseEntity.ok(AccountMapper.toDto(account));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
+        Account account = accountService.withdraw(accountId, new Money(request.getAmount()));
+        if (account == null) {
+            return accountNotFound(accountId);
         }
+        return ResponseEntity.ok(AccountMapper.toDto(account));
     }
 
     // Get Transactions
@@ -85,8 +75,7 @@ public class AccountController {
     public ResponseEntity<?> getTransactions(@PathVariable("accountId") String accountId) {
         List<Transaction> transactions = accountService.getTransactions(accountId);
         if (transactions == null) {
-            return ResponseEntity.status(404)
-                .body("No account found with id: " + accountId);
+            return accountNotFound(accountId);
         }
         List<TransactionResponseDTO> dtos = transactions.stream()
                 .map(AccountMapper::toDto)
@@ -99,8 +88,7 @@ public class AccountController {
     public ResponseEntity<?> getStatement(@PathVariable("accountId") String accountId) {
         List<Transaction> transactions = accountService.getTransactions(accountId);
         if (transactions == null) {
-            return ResponseEntity.status(404)
-                .body("No account found with id: " + accountId);
+            return accountNotFound(accountId);
         }
         String statement = statementPrinter.print(transactions);
         return ResponseEntity.ok(statement);

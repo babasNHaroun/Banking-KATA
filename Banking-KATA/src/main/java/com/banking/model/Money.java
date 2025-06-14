@@ -1,13 +1,14 @@
 package com.banking.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public final class Money {
     private final BigDecimal value;
 
     public Money(BigDecimal value) {
-        this.value = value.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        this.value = value.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public Money add(Money other) {
@@ -22,7 +23,7 @@ public final class Money {
         return value.compareTo(BigDecimal.ZERO) < 0;
     }
 
-    public BigDecimal asBigDecimal() {
+    public BigDecimal getValue() {
         return value;
     }
 

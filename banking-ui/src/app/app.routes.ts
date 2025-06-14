@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { AccountCreateComponent } from './account/account-create/account-create.component';
-import { AccountDepositComponent } from './account/account-deposit/account-deposit.component';
-import { AccountWithdrawComponent } from './account/account-withdraw/account-withdraw.component';
-import { AccountTransactionsComponent } from './account/account-transactions/account-transactions.component';
-import { AccountStatementComponent } from './account/account-statement/account-statement.component';
+import { AccountCreateComponent } from './components/account-create/account-create.component';
+import { AccountDepositComponent } from './components/account-deposit/account-deposit.component';
+import { AccountWithdrawComponent } from './components/account-withdraw/account-withdraw.component';
+import { AccountTransactionsComponent } from './components/account-transactions/account-transactions.component';
+import { AccountStatementComponent } from './components/account-statement/account-statement.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'accounts/create', pathMatch: 'full' },

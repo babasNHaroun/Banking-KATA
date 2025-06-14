@@ -12,7 +12,7 @@ public class AccountMapper {
     public static AccountResponseDTO toDto(Account account) {
         AccountResponseDTO dto = new AccountResponseDTO();
         dto.setAccountId(account.getAccountId());
-        dto.setBalance(account.getBalance().toString());
+        dto.setBalance(account.getBalance().getValue());
         List<TransactionResponseDTO> txDtos = account.getTransactions().stream()
             .map(AccountMapper::toDto)
             .collect(Collectors.toList());
@@ -23,8 +23,8 @@ public class AccountMapper {
     public static TransactionResponseDTO toDto(Transaction tx) {
         TransactionResponseDTO dto = new TransactionResponseDTO();
         dto.setDate(tx.date().toString());
-        dto.setAmount(tx.amount().toString());
-        dto.setBalanceAfter(tx.balanceAfter().toString());
+        dto.setAmount(tx.amount().getValue());
+        dto.setBalanceAfter(tx.balanceAfter().getValue());
         return dto;
     }
 }
