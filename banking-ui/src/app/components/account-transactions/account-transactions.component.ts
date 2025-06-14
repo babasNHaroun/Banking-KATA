@@ -5,6 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from '../../services/account.service';
+import { Transaction } from '../../models/account.model';
 
 @Component({
   selector: 'app-account-transactions',
@@ -20,7 +21,7 @@ import { AccountService } from '../../services/account.service';
 })
 export class AccountTransactionsComponent {
   accountId = '';
-  transactions: any[] = [];
+  transactions: Transaction[] = [];
   displayedColumns: string[] = ['date', 'amount', 'balanceAfter'];
 
   constructor(
