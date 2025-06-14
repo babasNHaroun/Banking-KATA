@@ -4,6 +4,9 @@ import com.banking.model.Account;
 import com.banking.model.Money;
 import com.banking.model.Transaction;
 import com.banking.repository.AccountRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
@@ -12,6 +15,8 @@ import java.util.List;
 @Service
 public class AccountService {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
+
     private final AccountRepository accountRepository;
 
     public AccountService(AccountRepository accountRepository) {
@@ -19,39 +24,56 @@ public class AccountService {
     }
 
     public Account createAccount(String accountId) {
-        System.out.println("Creating account with id: " + accountId);
+        logger.info("Creating account with id: {}", accountId);
         if (accountRepository.findById(accountId) != null) {
-            System.err.println("Account already exists with id: " + accountId);
+            logger.warn("Account already exists with id: {}", accountId);
             throw new IllegalArgumentException("Account already exists with id: " + accountId);
         }
         Account account = new Account(accountId, Clock.systemUTC());
         accountRepository.save(account);
+        logger.info("Account created with id: {}", accountId);
         return account;
     }
 
     public Account getAccount(String accountId) {
+        logger.info("Fetching account with id: {}", accountId);
         return accountRepository.findById(accountId);
     }
 
     public Account deposit(String accountId, Money amount) {
+        logger.info("Depositing {} to account {}", amount, accountId);
         Account account = accountRepository.findById(accountId);
-        if (account == null) throw new IllegalArgumentException("Account not found");
+        if (account == null) {
+            logger.warn("Account not found for deposit: {}", accountId);
+            throw new IllegalArgumentException("Account not found");
+        }
         account.deposit(amount);
         accountRepository.save(account);
+        logger.info("Deposit successful for account {}", accountId);
         return account;
     }
 
     public Account withdraw(String accountId, Money amount) {
+        logger.info("Withdrawing {} from account {}", amount, accountId);
         Account account = accountRepository.findById(accountId);
-        if (account == null) throw new IllegalArgumentException("Account not found");
+        if (account == null) {
+            logger.warn("Account not found for withdrawal: {}", accountId);
+            throw new IllegalArgumentException("Account not found");
+        }
         account.withdraw(amount);
         accountRepository.save(account);
+        logger.info("Withdraw successful for account {}", accountId);
         return account;
     }
 
     public List<Transaction> getTransactions(String accountId) {
+        logger.info("Fetching transactions for account {}", accountId);
         Account account = accountRepository.findById(accountId);
-        if (account == null) return null;
+        if (account == null) {
+            logger.warn("Account not found for transactions: {}", accountId);
+            return null;
+        }
+        logger.info("Found {} transactions for account {}", account.getTransactions().size(), accountId);
         return account.getTransactions();
     }
 }

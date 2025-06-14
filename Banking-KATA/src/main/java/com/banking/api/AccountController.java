@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/accounts")
@@ -23,6 +25,7 @@ public class AccountController {
 
     private final AccountService accountService;
     private final StatementPrinter statementPrinter;
+    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     public AccountController(AccountService accountService, StatementPrinter statementPrinter) {
         this.accountService = accountService;
@@ -30,12 +33,14 @@ public class AccountController {
     }
 
     private ResponseEntity<String> accountNotFound(String accountId) {
+        logger.warn("Account not found: {}", accountId);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No account found with id: " + accountId);
     }
 
     // Create Account
     @PostMapping
     public ResponseEntity<?> createAccount(@RequestBody AccountCreateRequestDTO request) {
+        logger.info("Received request to create account with id: {}", request.getAccountId());
         Account account = accountService.createAccount(request.getAccountId());
         return ResponseEntity.status(HttpStatus.CREATED).body(AccountMapper.toDto(account));
     }
@@ -43,6 +48,7 @@ public class AccountController {
     // Get Account Details
     @GetMapping("/{accountId}")
     public ResponseEntity<?> getAccount(@PathVariable("accountId") String accountId) {
+        logger.info("Received request to fetch account details for id: {}", accountId);
         Account account = accountService.getAccount(accountId);
         if (account == null) {
             return accountNotFound(accountId);
@@ -53,6 +59,7 @@ public class AccountController {
     // Deposit
     @PostMapping("/{accountId}/deposit")
     public ResponseEntity<?> deposit(@PathVariable("accountId") String accountId, @RequestBody AmountRequestDTO request) {
+        logger.info("Received request to deposit to account {}", accountId);
         Account account = accountService.deposit(accountId, new Money(request.getAmount()));
         if (account == null) {
             return accountNotFound(accountId);
@@ -63,6 +70,7 @@ public class AccountController {
     // Withdraw
     @PostMapping("/{accountId}/withdraw")
     public ResponseEntity<?> withdraw(@PathVariable("accountId") String accountId, @RequestBody AmountRequestDTO request) {
+        logger.info("Received request to withdraw from account {}", accountId);
         Account account = accountService.withdraw(accountId, new Money(request.getAmount()));
         if (account == null) {
             return accountNotFound(accountId);
@@ -73,6 +81,7 @@ public class AccountController {
     // Get Transactions
     @GetMapping("/{accountId}/transactions")
     public ResponseEntity<?> getTransactions(@PathVariable("accountId") String accountId) {
+        logger.info("Received request to fetch transactions for account {}", accountId);
         List<Transaction> transactions = accountService.getTransactions(accountId);
         if (transactions == null) {
             return accountNotFound(accountId);
@@ -86,6 +95,7 @@ public class AccountController {
     // Get Statement
     @GetMapping("/{accountId}/statement")
     public ResponseEntity<?> getStatement(@PathVariable("accountId") String accountId) {
+        logger.info("Received request to fetch statement for account {}", accountId);
         List<Transaction> transactions = accountService.getTransactions(accountId);
         if (transactions == null) {
             return accountNotFound(accountId);
