@@ -36,7 +36,6 @@ export class AccountCreateComponent {
     this.accountService.createAccount(this.accountId).subscribe({
       next: (res) => {
         this.message = 'Account created successfully!';
-        this.accountId = '';
       },
       error: (err) => {
         this.error = err.error || 'Failed to create account.';

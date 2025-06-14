@@ -19,7 +19,9 @@ public class AccountService {
     }
 
     public Account createAccount(String accountId) {
+        System.out.println("Creating account with id: " + accountId);
         if (accountRepository.findById(accountId) != null) {
+            System.err.println("Account already exists with id: " + accountId);
             throw new IllegalArgumentException("Account already exists with id: " + accountId);
         }
         Account account = new Account(accountId, Clock.systemUTC());

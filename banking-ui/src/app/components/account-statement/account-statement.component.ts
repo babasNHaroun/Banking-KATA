@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { AccountService } from '../../services/account.service';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-account-statement',

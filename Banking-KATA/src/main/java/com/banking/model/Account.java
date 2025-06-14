@@ -44,7 +44,7 @@ public class Account {
         if (balance.subtract(amount).isNegative()) throw new IllegalArgumentException("Insufficient funds");
         synchronized (this) {
            balance = balance.subtract(amount);
-           transactions.add(new Transaction(new Money(amount.asBigDecimal().negate()), balance, LocalDateTime.now(clock)));
+           transactions.add(new Transaction(new Money(amount.getValue().negate()), balance, LocalDateTime.now(clock)));
         }
     }
 }
