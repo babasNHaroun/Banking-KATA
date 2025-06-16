@@ -28,7 +28,7 @@ SG-Kata/
 └── banking-ui/                   # Angular frontend
     ├── src/
     │   ├── app/
-    │   │   ├── accounts/         # Feature components (deposit, withdraw, transactions, statement)
+    │   │   ├── componenets/         # Feature components (deposit, withdraw, transactions, statement)
     │   │   ├── services/         # Angular services (e.g., account.service.ts)
     │   │   ├── models/           # TypeScript interfaces/models
     │   │   ├── app.component.ts  # Main app component
