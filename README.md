@@ -80,7 +80,7 @@ Thus, data is erased every time the backend restarts.
 ### Running the Backend
 
 ```sh
-cd Banking-KATA
+cd backend
 mvn spring-boot:run
 ```
 
@@ -97,7 +97,7 @@ CORS is enabled for `http://localhost:4200` to allow the Angular frontend to com
 ### Running the Frontend
 
 ```sh
-cd banking-ui
+cd frontend
 npm install
 ng serve -o
 ```
