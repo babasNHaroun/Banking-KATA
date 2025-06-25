@@ -1,8 +1,8 @@
 package com.banking.service;
 
-import com.banking.model.Account;
-import com.banking.model.Money;
-import com.banking.model.Transaction;
+import com.banking.domain.Account;
+import com.banking.domain.Money;
+import com.banking.domain.Transaction;
 import com.banking.repository.AccountRepository;
 
 import org.slf4j.Logger;
@@ -42,11 +42,7 @@ public class AccountService {
 
     public Account deposit(String accountId, Money amount) {
         logger.info("Depositing {} to account {}", amount, accountId);
-        Account account = accountRepository.findById(accountId);
-        if (account == null) {
-            logger.warn("Account not found for deposit: {}", accountId);
-            throw new IllegalArgumentException("Account not found");
-        }
+        Account account = getAccountOrThrow(accountId);
         account.deposit(amount);
         accountRepository.save(account);
         logger.info("Deposit successful for account {}", accountId);
@@ -55,11 +51,7 @@ public class AccountService {
 
     public Account withdraw(String accountId, Money amount) {
         logger.info("Withdrawing {} from account {}", amount, accountId);
-        Account account = accountRepository.findById(accountId);
-        if (account == null) {
-            logger.warn("Account not found for withdrawal: {}", accountId);
-            throw new IllegalArgumentException("Account not found");
-        }
+        Account account = getAccountOrThrow(accountId);
         account.withdraw(amount);
         accountRepository.save(account);
         logger.info("Withdraw successful for account {}", accountId);
@@ -68,12 +60,17 @@ public class AccountService {
 
     public List<Transaction> getTransactions(String accountId) {
         logger.info("Fetching transactions for account {}", accountId);
-        Account account = accountRepository.findById(accountId);
-        if (account == null) {
-            logger.warn("Account not found for transactions: {}", accountId);
-            return null;
-        }
+        Account account = getAccountOrThrow(accountId);
         logger.info("Found {} transactions for account {}", account.getTransactions().size(), accountId);
         return account.getTransactions();
     }
+
+    private Account getAccountOrThrow(String accountId) {
+    Account account = accountRepository.findById(accountId);
+    if (account == null) {
+        logger.warn("Account not found: {}", accountId);
+        throw new IllegalArgumentException("Account not found");
+    }
+    return account;
+}
 }

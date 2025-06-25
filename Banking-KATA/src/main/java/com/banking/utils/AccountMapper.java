@@ -1,9 +1,9 @@
-package com.banking.api.mapper;
+package com.banking.utils;
 
-import com.banking.model.Account;
-import com.banking.model.Transaction;
-import com.banking.api.dto.AccountResponseDTO;
-import com.banking.api.dto.TransactionResponseDTO;
+import com.banking.domain.Account;
+import com.banking.domain.Transaction;
+import com.banking.model.dto.AccountResponseDTO;
+import com.banking.model.dto.TransactionResponseDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;

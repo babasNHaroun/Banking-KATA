@@ -23,6 +23,7 @@ export class AccountTransactionsComponent {
   accountId = '';
   transactions: Transaction[] = [];
   displayedColumns: string[] = ['date', 'amount', 'balanceAfter'];
+  errorMessage = ''; // Add this property
 
   constructor(
     private accountService: AccountService,
@@ -38,8 +39,15 @@ export class AccountTransactionsComponent {
 
   loadTransactions() {
     this.accountService.getTransactions(this.accountId).subscribe({
-      next: (data) => this.transactions = data,
-      error: () => this.transactions = []
+      next: (transactions) => {
+        this.transactions = transactions;
+        this.errorMessage = '';
+      },
+      error: (err) => {
+        console.error('Error loading transactions:', err);
+        this.errorMessage = err.message || 'Could not load transactions.';
+        this.transactions = [];
+      }
     });
   }
 }

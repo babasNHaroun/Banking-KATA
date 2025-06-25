@@ -1,8 +1,9 @@
 package com.banking;
 
-import com.banking.model.Account;
-import com.banking.model.Money;
-import com.banking.model.Transaction;
+import com.banking.domain.Account;
+import com.banking.domain.Money;
+import com.banking.domain.Transaction;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

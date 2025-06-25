@@ -63,7 +63,7 @@ Thus, data is erased every time the backend restarts.
 
     This small angular app does not support the creation and management of accounts.
 
-    Of course, you can create as many accounts as you want with the Rest API /acounts POST endpoint using a Rest client if you want to.
+    Of course, you can create as many accounts as you want with the Rest API /accounts POST endpoint using a Rest client if you want to.
   )
 - Deposit & Withdraw
 - View Transactions
@@ -96,7 +96,7 @@ CORS is enabled for `http://localhost:4200` to allow the Angular frontend to com
 ```sh
 cd banking-ui
 npm install
-ng serve
+ng serve -o
 ```
 
 The frontend will start on [http://localhost:4200](http://localhost:4200).

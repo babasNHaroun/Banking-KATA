@@ -1,7 +1,7 @@
 package com.banking;
 
-import com.banking.model.Account;
-import com.banking.model.Money;
+import com.banking.domain.Account;
+import com.banking.domain.Money;
 import com.banking.service.StatementPrinter;
 import com.banking.service.impl.BankStatementPrinter;
 import com.banking.utils.Constants;

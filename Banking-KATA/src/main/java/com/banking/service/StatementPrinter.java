@@ -1,7 +1,8 @@
 package com.banking.service;
 
 import java.util.List;
-import com.banking.model.Transaction;
+
+import com.banking.domain.Transaction;
 
 public interface StatementPrinter {
     /**clear

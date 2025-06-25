@@ -48,7 +48,8 @@ export class AccountWithdrawComponent {
         this.amount = '';
       },
       error: (err) => {
-        this.error = err.error || 'Withdrawal failed.';
+        console.error('Withdrawal error:', JSON.stringify(err));
+        this.error = err.message || 'Withdrawal failed.';
       }
     });
   }

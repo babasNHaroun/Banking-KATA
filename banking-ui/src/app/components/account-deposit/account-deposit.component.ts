@@ -48,7 +48,7 @@ export class AccountDepositComponent {
         this.amount = '';
       },
       error: (err) => {
-        this.error = err.error || 'Deposit failed.';
+        this.error = err.message || 'Deposit failed.';
       }
     });
   }

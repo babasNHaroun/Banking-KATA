@@ -1,7 +1,8 @@
 package com.banking;
 
-import com.banking.model.Account;
-import com.banking.model.Money;
+import com.banking.domain.Account;
+import com.banking.domain.Money;
+
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

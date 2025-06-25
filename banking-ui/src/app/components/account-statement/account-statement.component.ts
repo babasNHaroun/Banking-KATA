@@ -33,11 +33,11 @@ export class AccountStatementComponent {
       }
     });
   }
-
+  message = '';
   loadStatement() {
     this.accountService.getStatement(this.accountId).subscribe({
       next: (data) => this.statement = data,
-      error: (err) => this.error = err.error || 'Could not load statement.'
+      error: (err) => this.message = err.message || 'Could not load statement.'
     });
   }
 }

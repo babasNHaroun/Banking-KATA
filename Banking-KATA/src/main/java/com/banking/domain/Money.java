@@ -1,4 +1,4 @@
-package com.banking.model;
+package com.banking.domain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

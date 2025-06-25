@@ -38,7 +38,7 @@ export class AccountCreateComponent {
         this.message = 'Account created successfully!';
       },
       error: (err) => {
-        this.error = err.error || 'Failed to create account.';
+        this.error = err.message || 'Failed to create account.';
       }
     });
   }

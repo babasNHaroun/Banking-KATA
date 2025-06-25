@@ -23,4 +23,8 @@
   <div *ngIf="transactions.length === 0" class="empty-message">
     <mat-icon>info</mat-icon> No transactions found.
   </div>
+    <div *ngIf="errorMessage" class="error-message">
+    <mat-icon color="warn">error</mat-icon>  {{ errorMessage }}
+  </div>
 </mat-card>
+

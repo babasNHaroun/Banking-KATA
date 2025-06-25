@@ -1,7 +1,7 @@
 package com.banking;
 
-import com.banking.model.Account;
-import com.banking.model.Money;
+import com.banking.domain.Account;
+import com.banking.domain.Money;
 import com.banking.repository.AccountRepository;
 import com.banking.repository.InMemoryAccountRepository;
 import com.banking.service.AccountService;

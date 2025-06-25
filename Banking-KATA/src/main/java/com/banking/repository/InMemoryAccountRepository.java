@@ -1,10 +1,11 @@
 package com.banking.repository;
 
-import com.banking.model.Account;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Repository;
+
+import com.banking.domain.Account;
 
 
 @Repository

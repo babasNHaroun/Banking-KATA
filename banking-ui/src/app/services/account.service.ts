@@ -53,6 +53,10 @@ export class AccountService {
   }
 
   private handleError(error: any) {
-    return throwError(() => error);
+    let errorMsg = 'An error occurred';
+    if (error.error && error.error.message) {
+      errorMsg = error.error;
+    }
+    return throwError(() => errorMsg);
   }
 }

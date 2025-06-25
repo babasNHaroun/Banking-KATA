@@ -1,13 +1,14 @@
 package com.banking.service.impl;
 
 import java.time.format.DateTimeFormatter;
-import com.banking.model.Transaction;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.banking.utils.Constants;
 import org.springframework.stereotype.Service;
+
+import com.banking.domain.Transaction;
 import com.banking.service.StatementPrinter;
 
 @Service

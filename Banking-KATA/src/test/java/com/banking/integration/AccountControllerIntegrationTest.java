@@ -1,7 +1,7 @@
 package com.banking.integration;
 
-import com.banking.api.dto.AccountCreateRequestDTO;
-import com.banking.api.dto.AmountRequestDTO;
+import com.banking.model.dto.AccountCreateRequestDTO;
+import com.banking.model.dto.AmountRequestDTO;
 import com.banking.utils.Constants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
