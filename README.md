@@ -2,8 +2,8 @@
 
 This repository contains two main projects:
 
-- **Banking-KATA**: Java Spring Boot backend for banking operations.
-- **banking-ui**: Angular frontend with Angular Material for interacting with the backend.
+- **backend**: Java Spring Boot backend for banking operations.
+- **frontend**: Angular frontend with Angular Material for interacting with the backend.
 
 ---
 
@@ -11,7 +11,7 @@ This repository contains two main projects:
 
 ```
 SG-Kata/
-├── Banking-KATA/                   # Spring Boot backend
+├── backend/                   # Spring Boot backend
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── java/com/banking/
@@ -28,7 +28,7 @@ SG-Kata/
 │   │       └── java/com/banking/   # Unit and integration tests
 │   └── pom.xml                     # Maven build file
 │
-└── banking-ui/                     # Angular frontend
+└── frontend/                     # Angular frontend
     ├── src/
     │   ├── app/
     │   │   ├── components/         # Angular components (deposit, withdraw, transactions, statement)
