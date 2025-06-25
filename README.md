@@ -75,7 +75,7 @@ Thus, data is erased every time the backend restarts.
 
 ---
 
-## 1. Banking-KATA (Spring Boot Backend)
+## 1. Backend
 
 ### Running the Backend
 
@@ -92,7 +92,7 @@ CORS is enabled for `http://localhost:4200` to allow the Angular frontend to com
 
 ---
 
-## 2. banking-ui (Angular Frontend)
+## 2. Frontend
 
 ### Running the Frontend
 
