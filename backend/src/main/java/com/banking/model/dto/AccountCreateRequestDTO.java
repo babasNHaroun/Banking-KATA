@@ -1,8 +1,19 @@
 package com.banking.model.dto;
 
-import lombok.Data;
-
-@Data
 public class AccountCreateRequestDTO {
     private String accountId;
+    
+    public AccountCreateRequestDTO() {}
+    
+    public AccountCreateRequestDTO(String accountId) {
+        this.accountId = accountId;
+    }
+    
+    public String getAccountId() {
+        return accountId;
+    }
+    
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
 }
