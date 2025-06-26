@@ -11,7 +11,7 @@ public class ErrorResponseDTO {
          this.message = message;
          this.error = error;
          this.timestamp = LocalDateTime.now().toString(); 
-    }
+        }
     public String getMessage() { return message; }
     public String getError() { return error; }
     public String getTimestamp() { return timestamp; }

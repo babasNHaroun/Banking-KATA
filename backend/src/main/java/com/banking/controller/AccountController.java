@@ -37,7 +37,7 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<AccountResponseDTO> createAccount(@RequestBody AccountCreateRequestDTO request) {
         logger.info("Received request to create account with id: {}", request.getAccountId());
-        Account account = accountService.createAccount(request.getAccountId());
+        final Account account = accountService.createAccount(request.getAccountId());
         return ResponseEntity.status(HttpStatus.CREATED).body(AccountMapper.toDto(account));
     }
 
@@ -45,21 +45,16 @@ public class AccountController {
     @GetMapping("/{accountId}")
     public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable("accountId") String accountId) {
         logger.info("Received request to fetch account details for id: {}", accountId);
-        Account account = accountService.getAccount(accountId);
-        if (account == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(AccountMapper.toDto(account));
+        return accountService.getAccount(accountId)
+                .map(account -> ResponseEntity.ok(AccountMapper.toDto(account)))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     // Deposit
     @PostMapping("/{accountId}/deposit")
     public ResponseEntity<AccountResponseDTO> deposit(@PathVariable("accountId") String accountId, @RequestBody AmountRequestDTO request) {
         logger.info("Received request to deposit to account {}", accountId);
-        Account account = accountService.deposit(accountId, new Money(request.getAmount()));
-        if (account == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        final Account account = accountService.deposit(accountId, new Money(request.getAmount()));
         return ResponseEntity.ok(AccountMapper.toDto(account));
     }
 
@@ -67,36 +62,27 @@ public class AccountController {
     @PostMapping("/{accountId}/withdraw")
     public ResponseEntity<AccountResponseDTO> withdraw(@PathVariable("accountId") String accountId, @RequestBody AmountRequestDTO request) {
         logger.info("Received request to withdraw from account {}", accountId);
-        Account account = accountService.withdraw(accountId, new Money(request.getAmount()));
-        if (account == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        final Account account = accountService.withdraw(accountId, new Money(request.getAmount()));
         return ResponseEntity.ok(AccountMapper.toDto(account));
     }
 
     // Get Transactions
     @GetMapping("/{accountId}/transactions")
-    public ResponseEntity<List<TransactionResponseDTO>> getTransactions(@PathVariable("accountId") String accountId) {
+    public ResponseEntity<List<TransactionResponseDTO>> getTransactions(@PathVariable String accountId) {
         logger.info("Received request to fetch transactions for account {}", accountId);
-        List<Transaction> transactions = accountService.getTransactions(accountId);
-        if (transactions == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        List<TransactionResponseDTO> dtos = transactions.stream()
+        return ResponseEntity.ok(
+            accountService.getTransactions(accountId).stream()
                 .map(AccountMapper::toDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(dtos);
-    }
+                .collect(Collectors.toList())
+        );
+    }       
 
     // Get Statement
     @GetMapping("/{accountId}/statement")
     public ResponseEntity<String> getStatement(@PathVariable("accountId") String accountId) {
         logger.info("Received request to fetch statement for account {}", accountId);
-        List<Transaction> transactions = accountService.getTransactions(accountId);
-        if (transactions == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        String statement = statementPrinter.print(transactions);
+        final List<Transaction> transactions = accountService.getTransactions(accountId);
+        final String statement = statementPrinter.print(transactions);
         return ResponseEntity.ok(statement);
     }
 }

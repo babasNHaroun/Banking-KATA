@@ -1,4 +1,4 @@
-# banking-ui
+# frontend
 
 This is the Angular frontend for the SG-Kata project.
 

@@ -2,6 +2,11 @@
   <mat-sidenav mode="side" opened class="sidenav">
     <mat-toolbar color="primary">Banking App</mat-toolbar>
     <mat-nav-list>
+      <button mat-list-item [routerLink]="'/accounts/create'" routerLinkActive="active">
+        <mat-icon>account_circle</mat-icon>
+        Account
+      </button>
+
       <button mat-list-item [routerLink]="'/accounts/account-123/deposit'" routerLinkActive="active">
         <mat-icon>arrow_downward</mat-icon>
         Deposit

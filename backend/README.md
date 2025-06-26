@@ -1,4 +1,4 @@
-# Banking-KATA (backend)
+# backend
 
 This is the Spring Boot backend for the SG-Kata project.
 

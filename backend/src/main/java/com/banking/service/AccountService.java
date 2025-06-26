@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Clock;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService {
@@ -29,20 +30,20 @@ public class AccountService {
             logger.warn("Account already exists with id: {}", accountId);
             throw new IllegalArgumentException("Account already exists with id: " + accountId);
         }
-        Account account = new Account(accountId, Clock.systemUTC());
+        final Account account = new Account(accountId, Clock.systemUTC());
         accountRepository.save(account);
         logger.info("Account created with id: {}", accountId);
         return account;
     }
 
-    public Account getAccount(String accountId) {
+    public Optional<Account> getAccount(String accountId) {
         logger.info("Fetching account with id: {}", accountId);
-        return accountRepository.findById(accountId);
+        return Optional.ofNullable(accountRepository.findById(accountId));
     }
 
     public Account deposit(String accountId, Money amount) {
         logger.info("Depositing {} to account {}", amount, accountId);
-        Account account = getAccountOrThrow(accountId);
+        final Account account = getAccountOrThrow(accountId);
         account.deposit(amount);
         accountRepository.save(account);
         logger.info("Deposit successful for account {}", accountId);
@@ -51,7 +52,7 @@ public class AccountService {
 
     public Account withdraw(String accountId, Money amount) {
         logger.info("Withdrawing {} from account {}", amount, accountId);
-        Account account = getAccountOrThrow(accountId);
+        final Account account = getAccountOrThrow(accountId);
         account.withdraw(amount);
         accountRepository.save(account);
         logger.info("Withdraw successful for account {}", accountId);
@@ -60,17 +61,21 @@ public class AccountService {
 
     public List<Transaction> getTransactions(String accountId) {
         logger.info("Fetching transactions for account {}", accountId);
-        Account account = getAccountOrThrow(accountId);
-        logger.info("Found {} transactions for account {}", account.getTransactions().size(), accountId);
-        return account.getTransactions();
+        final Account account = getAccountOrThrow(accountId);
+        List<Transaction> transactions = account.getTransactions();
+        if (transactions == null) {
+            logger.info("No transactions found for account {}", accountId);
+            transactions = List.of(); 
+        }
+        logger.info("Found {} transactions for account {}", transactions.size(), accountId);
+        return transactions;
     }
 
     private Account getAccountOrThrow(String accountId) {
-    Account account = accountRepository.findById(accountId);
-    if (account == null) {
-        logger.warn("Account not found: {}", accountId);
-        throw new IllegalArgumentException("Account not found");
-    }
-    return account;
-}
+      return Optional.ofNullable(accountRepository.findById(accountId))
+        .orElseThrow(() -> {
+            logger.warn("Account not found: {}", accountId);
+            return new IllegalArgumentException("Account not found");
+        });
+   }
 }
